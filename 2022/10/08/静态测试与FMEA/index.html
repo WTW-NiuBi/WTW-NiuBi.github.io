@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>静态测试与FMEA | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="静态测试方法人工静态方法人工静态方法检查代码错误，主要有代码走查、结对编程，以及同行评审这三种手段。 代码走查代码走查（Code Review），是由开发人员检查自己的代码，尽可能多地发现各类潜在错误。但是，由于个人能力的差异，以及开发人员的“思维惯性”，很多错误并不能在这个阶段被及时发现。 结对编程结对编程（Pair Programming），是一种敏捷软件开发的方法，一般是由两个开发人员结成对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="静态测试与FMEA">
+<meta property="og:url" content="http://example.com/2022/10/08/%E9%9D%99%E6%80%81%E6%B5%8B%E8%AF%95%E4%B8%8EFMEA/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="静态测试方法人工静态方法人工静态方法检查代码错误，主要有代码走查、结对编程，以及同行评审这三种手段。 代码走查代码走查（Code Review），是由开发人员检查自己的代码，尽可能多地发现各类潜在错误。但是，由于个人能力的差异，以及开发人员的“思维惯性”，很多错误并不能在这个阶段被及时发现。 结对编程结对编程（Pair Programming），是一种敏捷软件开发的方法，一般是由两个开发人员结成对">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/%E9%9D%99%E6%80%81%E6%B5%8B%E8%AF%95%E4%B8%8EFMEA/1.png">
+<meta property="article:published_time" content="2022-10-08T01:42:10.000Z">
+<meta property="article:modified_time" content="2022-10-08T02:22:58.560Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="专业知识">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E9%9D%99%E6%80%81%E6%B5%8B%E8%AF%95%E4%B8%8EFMEA/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-静态测试与FMEA" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/10/08/%E9%9D%99%E6%80%81%E6%B5%8B%E8%AF%95%E4%B8%8EFMEA/" class="article-date">
+  <time class="dt-published" datetime="2022-10-08T01:42:10.000Z" itemprop="datePublished">2022-10-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      静态测试与FMEA
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="静态测试方法"><a href="#静态测试方法" class="headerlink" title="静态测试方法"></a>静态测试方法</h1><h2 id="人工静态方法"><a href="#人工静态方法" class="headerlink" title="人工静态方法"></a>人工静态方法</h2><p>人工静态方法检查代码错误，主要有代码走查、结对编程，以及同行评审这三种手段。</p>
+<h3 id="代码走查"><a href="#代码走查" class="headerlink" title="代码走查"></a>代码走查</h3><p>代码走查（<strong>Code Review</strong>），是由开发人员检查自己的代码，尽可能多地发现各类潜在错误。但是，由于个人能力的差异，以及开发人员的“思维惯性”，很多错误并不能在这个阶段被及时发现。</p>
+<h3 id="结对编程"><a href="#结对编程" class="headerlink" title="结对编程"></a>结对编程</h3><p>结对编程（<strong>Pair Programming</strong>），是一种敏捷软件开发的方法，一般是由两个开发人员结成对子在一台计算机上共同完成开发任务。其中，一个开发人员实现代码，通过被称为“驾驶员”；另一个开发人员审查输入的每一行代码，通常被称为“观察员”。当“观察员”对代码有任何疑问时，会立即要求“驾驶员”给出解释。解释过程中，“驾驶员”会意识到问题所在，进而修正代码设计和实现。实际执行过程中，这两个开发人员的角色会定期更换。</p>
+<h3 id="同行评审"><a href="#同行评审" class="headerlink" title="同行评审"></a>同行评审</h3><p>同行评审（<strong>Peer Review</strong>），是指把代码递交到代码仓库，或者合并代码分支（Branch）到主干（Master）前，需要和你同技术级别或者更高技术级别的一个或多个同事对你的代码进行评审，只有通过所有评审后，你的代码才会被真正递交。如果你所在的项目使用 <code>GitHub</code> 管理代码，并采用 <code>GitFlow</code> 的分支管理策略，那么在递交代码或者分支合并时，需要先递交 Pull Request（PR），只有这个 PR 经过了所有评审者的审核，才能被合并。这也是同行评审的具体实践。目前，只要你采用 <code>GitFlow</code> 的分支管理策略，基本都会采用这个方式。</p>
+<p>对于以上三种方式，使用最普遍的是<strong>同行评审</strong>。因为同行评审既能较好地保证代码质量，又不需要过多的人工成本投入，而且递交的代码出现问题后责任明确，另外代码的可追溯性也很好。结对编程的实际效果虽然不错，但是对人员的利用率比较低，通常被用于一些非常关键和底层算法的代码实现。</p>
+<h2 id="自动静态方法"><a href="#自动静态方法" class="headerlink" title="自动静态方法"></a>自动静态方法</h2><p>自动静态方法具有自动化程度高，检查发现问题的成本低以及能够发现的代码问题广等特点，所以该方法被很多企业和项目广泛应用于前期代码质量控制和代码质量度量。</p>
+<p>在实际工程实践中，企业往往会结合自己的编码规范定制规程库，并与本地 IDE 开发环境和持续集成的流水线进行高度整合。</p>
+<p>代码本地开发阶段，IDE 环境就可以自动对代码实现自动静态检查；当代码递交到代码仓库后，CI&#x2F;CD 流水线也会自动触发代码静态检查，如果检测到潜在错误，就会自动邮件通知代码递交者。</p>
+<p>自动静态方法通常能够以极低的成本发现以下问题：</p>
+<blockquote>
+<p>使用未初始化的变量；变量在使用前未定义；变量声明了但未使用；变量类型不匹配；部分的内存泄漏问题；空指针引用；缓冲区溢出；数组越界；不可达的僵尸代码；过高的代码复杂度；死循环；大量的重复代码块；</p>
+</blockquote>
+<blockquote>
+<p> C 语言的自动静态扫描工具 splint</p>
+<p>Python中可以pylint进行检查</p>
+<p>主流的自动静态工具 Sonar</p>
+</blockquote>
+<p>（可以在IDE的plugin管理界面安装<code>SonarLint</code>，安装完重启IDE，可以在IDE环境中实时看到Sonar的静态分析结果，IDE 中绑定 <code>SonarQube</code>，就可以把 <code>SonarLint</code> 和 <code>SonarQube</code> 集成）</p>
+<p>目前，自动静态扫描通常都会和持续集成的流水线做绑定，最常见的应用场景是当你递交代码后，持续集成流水线就会自动触发自动静态扫描，这一功能是通过 Jenkins 以及 Jenkins 上的 SonarQube 插件来完成的，当你在 Jenkins 中安装了 SonarQube Plugin，并且将 SonarQube 服务器相关的配置信息加入 Plugin 之后，你就可以在 Jenkins Job 的配置中增加 Sonar 静态扫描步骤了。</p>
+<p>实践：要求每个开发提交代码前都需要做sonar扫描。</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/seanyang_/article/details/123782649">跳转</a></p>
+<h1 id="FMEA"><a href="#FMEA" class="headerlink" title="FMEA"></a>FMEA</h1><h2 id="引入：通俗谈谈FMEA"><a href="#引入：通俗谈谈FMEA" class="headerlink" title="引入：通俗谈谈FMEA"></a>引入：通俗谈谈FMEA</h2><p>每当面对一个不可预知的情况时，有一些东西可以引导我们，消除我们的恐惧，避免可能出现的问题和后果 —- 这个东西就是FMEA，也就是潜在失效模式与效应分析（Potential Failure Mode and Effects Analysis）的缩写。</p>
+<p>FMEA是一种试验错误的思维模式。这是什么意思？就是给你一个可能的错误列表，以及错误的结果和严重程度。然后，你看完之后说：哦，原来是这样！可怕，不要犯这些错误。</p>
+<p>比如考驾照。每个人都应该知道教练脾气不好，从来不和你好好说话。我们经常可以看到下面的对话。</p>
+<blockquote>
+<p>教练:前面有一位老人，看见了吗？</p>
+<p>学生:是的。</p>
+<p>教练:来吧，加油门过去，撞他！</p>
+<p>学生:教练，我<del>不</del>敢~</p>
+<p>教练:不敢？不敢快踩刹车。</p>
+</blockquote>
+<p>看到了吗？教练教你踩刹车，不是直接告诉你“踩刹车，不要撞到行人”。而是用失败模式“来，杀了他！”，先告诉失败结果，形成警示，并让你对失败模式有更深的了解。那么你自己也有这种意识:“遇到行人，踩刹车减速”。这是FMEA。</p>
+<p>所以FMEA肯定是在事情发生之前就已经完成了。打人的时候不会叫FMEA，而是返工和不好的改进。</p>
+<p>FMEA如前所述，是为了避免一些陌生和不熟悉带来的问题。从两个方面:</p>
+<p>对于全新的产品、设计和生产流程。所以人们对这些新事物并不熟悉。这时候，我们会提前从其他相关产品中梳理出常见的潜在问题，并加以防范，以便吸取以往的经验。</p>
+<p>对于公司的新员工。FMEA是包含大量故障模式的文档。这是一份传达“试错”经验的文件。它可以回答“如果不按照要求做，会是什么样子？”这个问题。让他们快速了解生产过程和产品设计中的一些特殊控制项目，并遵守。</p>
+<p>因此，FMEA必须在行动执行和产品进入下一阶段之前完成，为后续产品拓展提供参考资料。</p>
+<h2 id="一-FMEA的目的和说明"><a href="#一-FMEA的目的和说明" class="headerlink" title="一.FMEA的目的和说明"></a>一.FMEA的目的和说明</h2><p>FMEA 是一套面向团队的系统的、定性分析方法，其目的是：</p>
+<ul>
+<li>评估产品／过程中失效的潜在技术风险</li>
+<li>分析失效的起因和影响</li>
+<li>记录预防和探测措施</li>
+<li>针对降低风险的措施提出建议</li>
+</ul>
+<p>制造商考虑的风险类型很多，包括技术风险、财务风险、时间风险和战略风险。FMEA 仅用千分析技术风险，从而减少失效、提高产品和过程的安全性。</p>
+<p><img src="/img/%E9%9D%99%E6%80%81%E6%B5%8B%E8%AF%95%E4%B8%8EFMEA/1.png" alt="图1"></p>
+<h2 id="二-FMEA的目标和限制"><a href="#二-FMEA的目标和限制" class="headerlink" title="二.FMEA的目标和限制"></a>二.FMEA的目标和限制</h2><p>FMEA 的目标是识别产品的功能或过程步骤、以及相关的潜在失效模式、影响和起因。<br>此外，它还用于评估计划中的预防和探测措施是否是充分的，以推荐额外的措施。对千采取的措施， FMEA 将形成文件并跟踪这些措施的实施情况，以降低风险。<br>FMEA 方法可帮助工程师将各种事项按重要性排序，并将重点放在产品或过程中发生问题的预防上。</p>
+<p>FMEA 具有以下局限性：</p>
+<ul>
+<li>定性（主观的） ， 非定掀（可测量的）</li>
+<li>单点失效分析，非多点失效分析</li>
+<li>依赖团队的知识水平， 可能预测、也可能无法预测未来的性能</li>
+<li>团队成员对他们讨论的内容和决定自行总结， 因此， FMEA报告的质量取决于团队的文字记录能力，所做的记录可能全面，也可能不全面（该记录不是会议记录）</li>
+</ul>
+<p>FTA (故障树分析）和FMEDA (失效模式、影响和诊断分析）等其他方法可用于定量分析和多点失效分析。这些方法可以计算和分析相关指标（单点失效分析、多点故障、潜在故障），从而得出量化分析结果。</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/ucourse/article/details/125062088">跳转（1）</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_41653350/article/details/125405104">跳转（2）</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/10/08/%E9%9D%99%E6%80%81%E6%B5%8B%E8%AF%95%E4%B8%8EFMEA/" data-id="clwdo6phe0039k4tx3lxqhmtn" data-title="静态测试与FMEA" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%93%E4%B8%9A%E7%9F%A5%E8%AF%86/" rel="tag">专业知识</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/10/12/st%E8%A1%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          st表
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/09/19/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">二叉树的遍历</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AJAX/">AJAX</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Axios/">Axios</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Css/">Css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Html/">Html</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E5%B7%A7/">技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E4%B8%9A%E7%9F%A5%E8%AF%86/" rel="tag">专业知识</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%88%86%E4%BA%AB/" rel="tag">个人分享</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" rel="tag">前端学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag">基础编程语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/%E4%B8%93%E4%B8%9A%E7%9F%A5%E8%AF%86/" style="font-size: 10px;">专业知识</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%88%86%E4%BA%AB/" style="font-size: 10px;">个人分享</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">前端学习</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" style="font-size: 18px;">基础编程语言</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 14px;">数据结构</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 16px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/11/12/Vue%E5%85%A8%E5%AE%B6%E6%A1%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Vue全家桶学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/11/12/ES6-11%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">ES6-11学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/11/05/JavaScript%E9%AB%98%E7%BA%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">JavaScript高级学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/30/Axios%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Axios学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/23/AJAX%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">AJAX学习笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

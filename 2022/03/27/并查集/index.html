@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>并查集 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="最大作用：检查图中是否存在环 问题引入：如图：  任务：检查该图中是否存在环，如果存在返回true,如果不存在返回false。 将所有顶点抽出来  0	1	2	3	4	5  再抽出边（这里随机抽几条边举例）  0	1	2	&#x2F;&#x2F;代表0,1,2连在一起   3	4  此时形成了两个集合，一个集合中元素为0,1,2，另一个集合中元素为3,4 此时再取1，3两条边，发现此时需要将1，3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="并查集">
+<meta property="og:url" content="http://example.com/2022/03/27/%E5%B9%B6%E6%9F%A5%E9%9B%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="最大作用：检查图中是否存在环 问题引入：如图：  任务：检查该图中是否存在环，如果存在返回true,如果不存在返回false。 将所有顶点抽出来  0	1	2	3	4	5  再抽出边（这里随机抽几条边举例）  0	1	2	&#x2F;&#x2F;代表0,1,2连在一起   3	4  此时形成了两个集合，一个集合中元素为0,1,2，另一个集合中元素为3,4 此时再取1，3两条边，发现此时需要将1，3">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/ex1.png">
+<meta property="og:image" content="http://example.com/img/ex2.png">
+<meta property="og:image" content="http://example.com/img/ex3.png">
+<meta property="og:image" content="http://example.com/img/ex4.png">
+<meta property="og:image" content="http://example.com/img/ex5.png">
+<meta property="og:image" content="http://example.com/img/ex6.png">
+<meta property="article:published_time" content="2022-03-27T02:51:46.000Z">
+<meta property="article:modified_time" content="2022-03-27T04:20:54.369Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/ex1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-并查集" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/03/27/%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="article-date">
+  <time class="dt-published" datetime="2022-03-27T02:51:46.000Z" itemprop="datePublished">2022-03-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      并查集
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><strong>最大作用：检查图中是否存在环</strong></p>
+<h1 id="问题引入："><a href="#问题引入：" class="headerlink" title="问题引入："></a>问题引入：</h1><p>如图：</p>
+<p><img src="/img/ex1.png"></p>
+<p>任务：检查该图中是否存在环，如果存在返回true,如果不存在返回false。</p>
+<p>将所有顶点抽出来</p>
+<blockquote>
+<p>0	1	2	3	4	5</p>
+</blockquote>
+<p>再抽出边（这里随机抽几条边举例）</p>
+<blockquote>
+<p>0	1	2	&#x2F;&#x2F;代表0,1,2连在一起</p>
+</blockquote>
+<blockquote>
+<p>3	4</p>
+</blockquote>
+<p>此时形成了两个集合，一个集合中元素为0,1,2，另一个集合中元素为3,4</p>
+<p>此时再取1，3两条边，发现此时需要将1，3放在同一个集合中去，即将两个集合<strong>合并</strong>在一起</p>
+<blockquote>
+<p>0	1	2	3	4	</p>
+</blockquote>
+<p>表示在任何一个点开始都能到达另外的一个集合内的点</p>
+<p>此时如果选取两个点，这两个点如果都在上述的合并集合里面，则说明存在环。</p>
+<h1 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h1><p>首先创建一个一维数组parent[]，用来形成一颗树，初始化为-1。</p>
+<p>例如：</p>
+<p><img src="/img/ex2.png"></p>
+<p>此时表示parent[1] &#x3D; 0，即1的父结点是0。</p>
+<p>接着开始选边</p>
+<p><img src="/img/ex3.png"></p>
+<p>这时可以将1，3相连，也可将2，3相连，但都存在问题。</p>
+<p>1，3相连可能会导致两点之间特别特别长，2，3相连可能会出现断层。</p>
+<p>最好的方法是分别找到1，3的<strong>父结点</strong>，再将两者的父结点相连。</p>
+<p><img src="/img/ex4.png"></p>
+<p>此时输入两个点查找，如果两个点的根结点一样，说明两者是在同一个集合里面，则加该边会形成一个环。</p>
+<p>代码思路：</p>
+<p><img src="/img/ex5.png"></p>
+<h1 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> VERTICES 6<span class="comment">//这里有6个结点</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">initialise</span><span class="params">(<span class="type">int</span> parent[])</span></span>&#123;<span class="comment">//初始化</span></span><br><span class="line">	<span class="type">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; VERTICES;i++)&#123;</span><br><span class="line">		parent[i] = <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find_root</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> parent[])</span></span>&#123;<span class="comment">//查找x点的根结点</span></span><br><span class="line">	<span class="type">int</span> x_root = x;</span><br><span class="line">	<span class="keyword">while</span>(parent[x_root] != <span class="number">-1</span>)&#123;<span class="comment">//-1表示该节点为根结点</span></span><br><span class="line">		x_root = parent[x_root];<span class="comment">//更新x_root</span></span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">return</span> x_root;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 1 - union successfully,0 - failed */</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">union_vertices</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y,<span class="type">int</span> parent[])</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> x_root = <span class="built_in">find_root</span>(x,parent);</span><br><span class="line">	<span class="type">int</span> y_root = <span class="built_in">find_root</span>(y,parent);</span><br><span class="line">	<span class="keyword">if</span>(x_root == y_root)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//两个结点的根结点相同，合并失败，返回0</span></span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		parent[x_root] = y_root;<span class="comment">//连接两个集合</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> parent[VERTICES] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="type">int</span> edges[<span class="number">6</span>][<span class="number">2</span>] = &#123;&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">2</span>&#125;,&#123;<span class="number">1</span>,<span class="number">3</span>&#125;,</span><br><span class="line">						&#123;<span class="number">2</span>,<span class="number">4</span>&#125;,&#123;<span class="number">3</span>,<span class="number">4</span>&#125;,&#123;<span class="number">2</span>,<span class="number">5</span>&#125;&#125;;<span class="comment">//这里二位数组的6表示6个结点，2表示1条边连接2个结点</span></span><br><span class="line">	<span class="built_in">initialise</span>(parent);<span class="comment">//将parent数组里面的点全部更新为-1</span></span><br><span class="line">	<span class="type">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; <span class="number">6</span>;i++)&#123;</span><br><span class="line">		<span class="type">int</span> x = edges[i][<span class="number">0</span>];</span><br><span class="line">		<span class="type">int</span> y = edges[i][<span class="number">1</span>];</span><br><span class="line">		<span class="keyword">if</span>(!<span class="built_in">union_vertices</span>(x,y,parent))&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;Cycle detected!\n&quot;</span>);</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;No cycles found.\n&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<blockquote>
+<p>Cycle detected!</p>
+</blockquote>
+<p>若此时将边(2,4)删去，此时图中不存在环，输出变为：</p>
+<blockquote>
+<p>No cycles found.</p>
+</blockquote>
+<p>但此时该代码仍存在问题——<strong>当结点较多时，运行效率会很低</strong>。</p>
+<p>此时引入一个新数组rank[]用于记录树的高度，每次合并前，先比较两颗树的高度，再将矮的树合并到高的树，此时<strong>树的总高度不改变</strong>。当然也存在一种特殊情况，即当两棵树的高度相同时，合并后树的总高度会加上1。</p>
+<p><img src="/img/ex6.png"></p>
+<p>修改后代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> VERTICES 6</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">initialise</span><span class="params">(<span class="type">int</span> parent[],<span class="type">int</span> rank[])</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; VERTICES;i++)&#123;</span><br><span class="line">		parent[i] = <span class="number">-1</span>;</span><br><span class="line">		rank[i] = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find_root</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> parent[])</span></span>&#123;<span class="comment">//查找x点的根结点</span></span><br><span class="line">	<span class="type">int</span> x_root = x;</span><br><span class="line">	<span class="keyword">while</span>(parent[x_root] != <span class="number">-1</span>)&#123;<span class="comment">//-1表示该节点为根结点</span></span><br><span class="line">		x_root = parent[x_root];<span class="comment">//更新x_root</span></span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">return</span> x_root;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 1 - union successfully,0 - failed */</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">union_vertices</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y,<span class="type">int</span> parent[],<span class="type">int</span> rank[])</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> x_root = <span class="built_in">find_root</span>(x,parent);</span><br><span class="line">	<span class="type">int</span> y_root = <span class="built_in">find_root</span>(y,parent);</span><br><span class="line">	<span class="keyword">if</span>(x_root == y_root)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//两个结点的根结点相同，合并失败，返回0</span></span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="comment">// parent[x_root] = y_root;</span></span><br><span class="line">		<span class="keyword">if</span>(rank[x_root] &gt; rank[y_root])&#123;</span><br><span class="line">			parent[y_root] = x_root;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(rank[y_root] &gt; rank[x_root])&#123;</span><br><span class="line">			parent[x_root] = y_root;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			parent[x_root] = y_root;</span><br><span class="line">			rank[y_root]++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> parent[VERTICES] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="type">int</span> rank[VERTICES] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="type">int</span> edges[<span class="number">6</span>][<span class="number">2</span>] = &#123;&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">2</span>&#125;,&#123;<span class="number">1</span>,<span class="number">3</span>&#125;,</span><br><span class="line">						&#123;<span class="number">2</span>,<span class="number">4</span>&#125;,&#123;<span class="number">3</span>,<span class="number">4</span>&#125;,&#123;<span class="number">2</span>,<span class="number">5</span>&#125;&#125;;</span><br><span class="line">	<span class="built_in">initialise</span>(parent,rank);</span><br><span class="line">	<span class="type">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; <span class="number">6</span>;i++)&#123;</span><br><span class="line">		<span class="type">int</span> x = edges[i][<span class="number">0</span>];</span><br><span class="line">		<span class="type">int</span> y = edges[i][<span class="number">1</span>];</span><br><span class="line">		<span class="keyword">if</span>(!<span class="built_in">union_vertices</span>(x,y,parent,rank))&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;Cycle detected!\n&quot;</span>);</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;No cycles found.\n&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/27/%E5%B9%B6%E6%9F%A5%E9%9B%86/" data-id="clwdo6phc002yk4txclspgugp" data-title="并查集" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/03/27/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          java学习笔记（六）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/03/20/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">java学习笔记（五）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AJAX/">AJAX</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Axios/">Axios</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Css/">Css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Html/">Html</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E5%B7%A7/">技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E4%B8%9A%E7%9F%A5%E8%AF%86/" rel="tag">专业知识</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%88%86%E4%BA%AB/" rel="tag">个人分享</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" rel="tag">前端学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag">基础编程语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/%E4%B8%93%E4%B8%9A%E7%9F%A5%E8%AF%86/" style="font-size: 10px;">专业知识</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%88%86%E4%BA%AB/" style="font-size: 10px;">个人分享</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">前端学习</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" style="font-size: 18px;">基础编程语言</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 14px;">数据结构</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 16px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/11/12/Vue%E5%85%A8%E5%AE%B6%E6%A1%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Vue全家桶学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/11/12/ES6-11%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">ES6-11学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/11/05/JavaScript%E9%AB%98%E7%BA%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">JavaScript高级学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/30/Axios%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Axios学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/23/AJAX%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">AJAX学习笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

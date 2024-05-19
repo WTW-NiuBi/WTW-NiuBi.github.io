@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>邻接表 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="我们发现，当图中的边数相对于顶点较少时，邻接矩阵是对存储空间的极大浪费。我们可以考虑对边或弧使用链式存储的方式来避免空间浪费的问题。回忆树结构的孩子表示法，将结点存入数组，并对结点的孩子进行链式存储，不管有多少孩子，也不会存在空间浪费问题。 应用这种思路，我们把这种数组与链表相结合的存储方法称为邻接表（Adjacency List）。 例: 现有一图：  如果将其用邻接矩阵的方式储存的话，会有较大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="邻接表">
+<meta property="og:url" content="http://example.com/2022/10/26/%E9%82%BB%E6%8E%A5%E8%A1%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="我们发现，当图中的边数相对于顶点较少时，邻接矩阵是对存储空间的极大浪费。我们可以考虑对边或弧使用链式存储的方式来避免空间浪费的问题。回忆树结构的孩子表示法，将结点存入数组，并对结点的孩子进行链式存储，不管有多少孩子，也不会存在空间浪费问题。 应用这种思路，我们把这种数组与链表相结合的存储方法称为邻接表（Adjacency List）。 例: 现有一图：  如果将其用邻接矩阵的方式储存的话，会有较大">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/1.png">
+<meta property="og:image" content="http://example.com/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/2.png">
+<meta property="og:image" content="http://example.com/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/3.png">
+<meta property="og:image" content="http://example.com/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/4.png">
+<meta property="og:image" content="http://example.com/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/5.png">
+<meta property="og:image" content="http://example.com/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/6.png">
+<meta property="og:image" content="http://example.com/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/7.png">
+<meta property="article:published_time" content="2022-10-26T03:03:46.000Z">
+<meta property="article:modified_time" content="2022-10-26T03:32:32.084Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-邻接表" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/10/26/%E9%82%BB%E6%8E%A5%E8%A1%A8/" class="article-date">
+  <time class="dt-published" datetime="2022-10-26T03:03:46.000Z" itemprop="datePublished">2022-10-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      邻接表
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>我们发现，当图中的边数相对于顶点较少时，<strong>邻接矩阵是对存储空间的极大浪费</strong>。我们可以考虑对边或弧使用<strong>链式存储</strong>的方式来避免空间浪费的问题。回忆树结构的孩子表示法，将结点存入数组，并对结点的孩子进行链式存储，不管有多少孩子，也不会存在空间浪费问题。</p>
+<p>应用这种思路，我们把这种<strong>数组与链表相结合</strong>的存储方法称为<strong>邻接表</strong>（Adjacency List）。</p>
+<p><strong>例</strong>:</p>
+<p>现有一图：</p>
+<p><img src="/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/1.png" alt="图一"></p>
+<p>如果将其用邻接矩阵的方式储存的话，会有较大的空间浪费</p>
+<p><img src="/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/2.png" alt="图二"></p>
+<p>查询时间复杂度为O(n^2)</p>
+<p>但如果将其转化为链式存储的话，就可将查询时间复杂度优化为O(m)</p>
+<p><img src="/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/3.png" alt="图三"></p>
+<p>那么我们可以得到下图所示的表（注：需要使用<strong>头插法</strong>插入每个结点）</p>
+<p><img src="/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/4.png" alt="图四"></p>
+<p>但其本质是每个列前都会有一个头节点，其权值<strong>无意义</strong>，用于<strong>索引</strong>列数</p>
+<p><img src="/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/5.png" alt="图五"></p>
+<p>那么可以直接使用链表代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> inf INT_MAX</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> maxn 1000010</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span> &#123;</span><br><span class="line">    <span class="type">int</span> x;<span class="comment">//结点的编号</span></span><br><span class="line">    <span class="type">int</span> w;<span class="comment">//某个顶点到x的边的权值</span></span><br><span class="line">    node* next;</span><br><span class="line">    <span class="built_in">node</span>(<span class="type">int</span> x_,<span class="type">int</span> w_)&#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;x = x_;</span><br><span class="line">        <span class="keyword">this</span>-&gt;w = w_;</span><br><span class="line">        next = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">vector&lt;node*&gt; head;</span><br><span class="line"><span class="comment">//头插法加边(核心)</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add_edge</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> v,<span class="type">int</span> w)</span></span>&#123;</span><br><span class="line">    node* a = head[u];</span><br><span class="line">    node* b = <span class="keyword">new</span> <span class="built_in">node</span>(v,w);</span><br><span class="line">    b-&gt;next = a-&gt;next;</span><br><span class="line">    a-&gt;next = b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;<span class="comment">//n是结点数，m是边数</span></span><br><span class="line">    head.<span class="built_in">resize</span>(n + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt;= n;i++)head[i] = <span class="keyword">new</span> <span class="built_in">node</span>(i,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; m;i++)&#123;</span><br><span class="line">        <span class="type">int</span> u,v,w;</span><br><span class="line">        cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;</span><br><span class="line">        <span class="built_in">add_edge</span>(u,v,w);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i++,<span class="built_in">puts</span>(<span class="string">&quot;&quot;</span>))&#123;</span><br><span class="line">        node* p = head[i]-&gt;next;</span><br><span class="line">        <span class="keyword">while</span>(p)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;(%d,%d,%d)&quot;</span>,i,p-&gt;x,p-&gt;w);</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但竞赛中为了节省时间，我们会使用数组来模拟链表进行存图（链式前向星），下面是其中的一种方法</p>
+<p>首先引入四个数组：edge(m),next(m),head(n),weight(m)</p>
+<blockquote>
+<p>edge:  索引为i的边的终点</p>
+<p>next: 索引为i的边的下一条兄弟边的索引</p>
+<p>head: i的第一条边的索引</p>
+<p>weight: 索引为i的边的权重</p>
+<p>idx: 索引指数</p>
+</blockquote>
+<p>那么手动模拟出每个数组的值应该为：</p>
+<p><img src="/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/6.png" alt="图六"></p>
+<p><img src="/img/%E9%82%BB%E6%8E%A5%E8%A1%A8/7.png" alt="图七"></p>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> inf INT_MAX</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> maxn 1000010</span></span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; head,edge,Next,weight;</span><br><span class="line"><span class="type">int</span> idx;</span><br><span class="line"><span class="comment">//头插法加边(核心)</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add_edge</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> v,<span class="type">int</span> w)</span></span>&#123;</span><br><span class="line">    edge[idx] = v;</span><br><span class="line">    weight[idx] = w;</span><br><span class="line">    Next[idx] = head[u];</span><br><span class="line">    head[u] = idx++;   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    head.<span class="built_in">resize</span>(n + <span class="number">1</span>,<span class="number">-1</span>);</span><br><span class="line">    edge.<span class="built_in">resize</span>(m + <span class="number">1</span>);</span><br><span class="line">    Next.<span class="built_in">resize</span>(m + <span class="number">1</span>);</span><br><span class="line">    weight.<span class="built_in">resize</span>(m + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; m;i++)&#123;</span><br><span class="line">        <span class="type">int</span> u,v,w;</span><br><span class="line">        cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;</span><br><span class="line">        <span class="built_in">add_edge</span>(u,v,w);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i++,<span class="built_in">puts</span>(<span class="string">&quot;&quot;</span>))&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = head[i];~j;j = Next[j])&#123;</span><br><span class="line">            <span class="type">int</span> u = i;</span><br><span class="line">            <span class="type">int</span> v = edge[j];</span><br><span class="line">            <span class="type">int</span> w = weight[j];</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%d,%d,%d&quot;</span>,u,v,w);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然还有另一种写法，不需要开四个数组，取而代之的是一个结构体，不过整体思路相同，代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1005</span>;<span class="comment">//点数最大值</span></span><br><span class="line"><span class="type">int</span> n, m, cnt;<span class="comment">//n个点，m条边</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Edge</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> to, w, next;<span class="comment">//终点，边权，同起点的上一条边的编号</span></span><br><span class="line">&#125;edge[maxn];<span class="comment">//边集</span></span><br><span class="line"><span class="type">int</span> head[maxn];<span class="comment">//head[i],表示以i为起点的第一条边在边集数组的位置（编号）</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span><span class="comment">//初始化</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i++) head[i] = <span class="number">-1</span>;</span><br><span class="line">    cnt = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add_edge</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> v, <span class="type">int</span> w)</span><span class="comment">//加边，u起点，v终点，w边权</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    edge[cnt].to = v; <span class="comment">//终点</span></span><br><span class="line">    edge[cnt].w = w; <span class="comment">//权值</span></span><br><span class="line">    edge[cnt].next = head[u];<span class="comment">//以u为起点上一条边的编号，也就是与这个边起点相同的上一条边的编号</span></span><br><span class="line">    head[u] = cnt++;<span class="comment">//更新以u为起点上一条边的编号</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> u, v, w;</span><br><span class="line">    <span class="built_in">init</span>();<span class="comment">//初始化</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; i++)<span class="comment">//输入m条边</span></span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;</span><br><span class="line">        <span class="built_in">add_edge</span>(u, v, w);<span class="comment">//加边</span></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        加双向边</span></span><br><span class="line"><span class="comment">        add_edge(u, v, w);</span></span><br><span class="line"><span class="comment">        add_edge(v, u, w);</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)<span class="comment">//n个起点</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = head[i]; j != <span class="number">-1</span>; j = edge[j].next)<span class="comment">//遍历以i为起点的边</span></span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; i &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; edge[j].to &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; edge[j].w &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">5 7</span></span><br><span class="line"><span class="comment">1 2 1</span></span><br><span class="line"><span class="comment">2 3 2</span></span><br><span class="line"><span class="comment">3 4 3</span></span><br><span class="line"><span class="comment">1 3 4</span></span><br><span class="line"><span class="comment">4 1 5</span></span><br><span class="line"><span class="comment">1 5 6</span></span><br><span class="line"><span class="comment">4 5 7</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/10/26/%E9%82%BB%E6%8E%A5%E8%A1%A8/" data-id="clwdo6phd0035k4txhxm62nzb" data-title="邻接表" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/11/04/Floyd%E7%AE%97%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Floyd算法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/10/21/dijkstra%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">dijkstra算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AJAX/">AJAX</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Axios/">Axios</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Css/">Css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Html/">Html</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E5%B7%A7/">技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E4%B8%9A%E7%9F%A5%E8%AF%86/" rel="tag">专业知识</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%88%86%E4%BA%AB/" rel="tag">个人分享</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" rel="tag">前端学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag">基础编程语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/%E4%B8%93%E4%B8%9A%E7%9F%A5%E8%AF%86/" style="font-size: 10px;">专业知识</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%88%86%E4%BA%AB/" style="font-size: 10px;">个人分享</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">前端学习</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" style="font-size: 18px;">基础编程语言</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 14px;">数据结构</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 16px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/11/12/Vue%E5%85%A8%E5%AE%B6%E6%A1%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Vue全家桶学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/11/12/ES6-11%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">ES6-11学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/11/05/JavaScript%E9%AB%98%E7%BA%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">JavaScript高级学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/30/Axios%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Axios学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/23/AJAX%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">AJAX学习笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
